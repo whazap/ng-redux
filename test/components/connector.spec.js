@@ -2,8 +2,8 @@ import expect from 'expect';
 let sinon = require('sinon');
 import { createStore } from 'redux';
 import Connector from '../../src/components/connector';
-import isFunction from 'lodash.isfunction';
-import assign from 'lodash.assign';
+import isFunction from 'lodash/isFunction';
+import assign from 'lodash/assign';
 
 describe('Connector', () => {
   let store;
