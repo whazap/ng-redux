@@ -3,9 +3,7 @@ import invariant from 'invariant';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import digestMiddleware from './digestMiddleware';
 
-import assign from 'lodash/assign';
 import curry from 'lodash/curry';
-import isArray from 'lodash/isArray';
 import isFunction from 'lodash/isFunction';
 import map from 'lodash/map';
 
@@ -28,7 +26,7 @@ export default function ngReduxProvider() {
     );
 
     invariant(
-      !storeEnhancers || isArray(storeEnhancers),
+      !storeEnhancers || Array.isArray(storeEnhancers),
       'The storeEnhancers parameter passed to createStoreWith must be an Array. Instead received %s.',
       typeof storeEnhancers
     );
@@ -58,7 +56,7 @@ export default function ngReduxProvider() {
         ? $injector.get(_reducer[key])
         : _reducer[key];
 
-      const resolveReducerKey = (result, key) => assign({}, result,
+      const resolveReducerKey = (result, key) => Object.assign({}, result,
         { [key]: getReducerKey(key) }
       );
 
@@ -78,7 +76,7 @@ export default function ngReduxProvider() {
       ? applyMiddleware(...resolvedMiddleware)(finalCreateStore)(_reducer, _initialState)
       : applyMiddleware(...resolvedMiddleware)(finalCreateStore)(_reducer);
 
-    return assign({}, store, { connect: Connector(store) });
+    return Object.assign({}, store, { connect: Connector(store) });
   };
 
   this.$get.$inject = ['$injector'];
